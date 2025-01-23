@@ -1,0 +1,37 @@
+# Project: Project2
+# Makefile created by Red Panda C++ 3.2.2958
+
+CXX      = "g++.exe"
+CC       = "gcc.exe"
+WINDRES  = "windres.exe"
+RM       = del /q /f
+CD       = cd /d
+LIBS     = "-lraylib" "-lopengl32" "-lgdi32" "-lwinmm"
+INCS     = 
+CXXINCS  = 
+CXXFLAGS = $(CXXINCS) "-g3" "-pipe" "-Wall" "-D_DEBUG"
+CFLAGS   = $(INCS) "-g3" "-pipe" "-Wall" "-D_DEBUG"
+WINDRESFLAGS = 
+RES      = Project2_private.res
+OBJ      = main.o $(RES)
+BIN      = Project2.exe
+LINKOBJ  = "main.o" "Project2_private.res"
+CLEANOBJ = "main.o" "Project2_private.res" "Project2.exe"
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	-$(RM) $(CLEANOBJ) >NUL 2>&1
+
+Project2.exe: $(OBJ)
+
+	$(CC) $(LINKOBJ) -o "Project2.exe" $(LIBS)
+
+main.o: main.c
+	$(CC) -c "main.c" -o "main.o" $(CFLAGS) 
+
+Project2_private.res: Project2_private.rc 
+	$(WINDRES) -i "Project2_private.rc" --input-format=rc -o "Project2_private.res" -O coff $(WINDRESFLAGS) 
+
